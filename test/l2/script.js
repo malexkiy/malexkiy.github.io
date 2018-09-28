@@ -5,7 +5,7 @@ function canvasPrepare() {
     canvas.height = window.innerHeight;*/
     
     var ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#fff';
+    ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     var img = new Image();
