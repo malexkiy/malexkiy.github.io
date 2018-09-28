@@ -237,7 +237,7 @@ function blur(srcImg) {
 05
 78
 */
-    
+    x = 0;
     p0 = get_rgba(x, y, srcImgData);
     p5 = get_rgba(x + 1, y, srcImgData);
 
