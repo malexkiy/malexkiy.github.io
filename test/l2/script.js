@@ -134,7 +134,7 @@ function blur(srcImg) {
 67
 */
     
-    for(var y = 1, x = 0; y < img_height - 1; y++) {
+    for(var y = 1, x = img_width - 1; y < img_height - 1; y++) {
         var p1 = get_rgba(x - 1, y - 1, srcImgData);
         var p2 = get_rgba(x, y - 1, srcImgData);
 
@@ -158,7 +158,7 @@ function blur(srcImg) {
 78
 */
     
-    for(var y = 1, x = img_width - 1; y < img_height - 1; y++) {
+    for(var y = 1, x = 0; y < img_height - 1; y++) {
         var p2 = get_rgba(x, y - 1, srcImgData);
         var p3 = get_rgba(x + 1, y - 1, srcImgData);
 
