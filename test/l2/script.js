@@ -33,6 +33,16 @@ function get_rgba(x, y, imgData) {
     return [r, g, b, a];
 }
 
+function set_rgba(x, y, imgData, r, g, b, a) {
+    var data = imgData.data;
+    var imageWidth = imgData.width;
+    
+    data[((imageWidth * y) + x) * 4] = r;
+    data[((imageWidth * y) + x) * 4 + 1] = g;
+    data[((imageWidth * y) + x) * 4 + 2] = b;
+    data[((imageWidth * y) + x) * 4 + 3] = a;
+}
+
 /*
 123
 405
@@ -70,7 +80,8 @@ function blur(srcImg) {
             var av_b = (p1[2] + p2[2] + p3[2] + p4[2] + p0[2] + p5[2] + p6[2] + p7[2] + p8[2]) / 9;
             var av_a = (p1[3] + p2[3] + p3[3] + p4[3] + p0[3] + p5[3] + p6[3] + p7[3] + p8[3]) / 9;
             
-            ctx.putImageData(blurImgData, x0 + x, y0 + y);
+            set_rgba(x, y, blurImgData, av_r, av_g, av_b, av_a);
         }
     }
+    ctx.putImageData(blurImgData, x0, y0);
 }
