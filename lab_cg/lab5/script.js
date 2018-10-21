@@ -72,7 +72,7 @@ function rect() {
 }
 
 function canvas_clear() {
-    drawType == DrawType.NONE;
+    drawType = DrawType.NONE;
     var canvas = document.getElementById('cvs');
     var ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
