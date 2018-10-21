@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <script type="text/javascript" src="script.js"></script>
+        <title>CG Lab6</title>
+    </head>
+    <body onload="canvasPrepare();">
+        <canvas id="cvs" width="500" height="500" style="border-style: solid;border-width: 1px;"></canvas>
+        <br/>
+        
+        <input id="line_btn" type="button" value="Line" onclick="line();"/>
+        <input id="polygon_btn" type="button" value="Polygon" onclick="polygon();"/>
+        <input id="clear_btn" type="button" value="Clear" onclick="canvas_clear();"/>
+        <p id="error" style="color: red;"></p>
+    </body>
+</html>
