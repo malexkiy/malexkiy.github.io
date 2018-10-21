@@ -12,3 +12,5 @@ lab3 (circle) - https://malexkiy.github.io/lab_cg/lab3/circle/
 lab4 - https://malexkiy.github.io/lab_cg/lab4/
 
 lab5 - https://malexkiy.github.io/lab_cg/lab5/
+
+lab6 - https://malexkiy.github.io/lab_cg/lab6/
