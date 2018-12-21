@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Fill polygon</title>
+	<style>
+    p{
+      margin: 2px;
+    }
+	</style>
+</head>
+<body>
+	<h1 style = "text-align: center; font-size: 20px; margin: 15px">Заполнение многоугольника</h1>
+	<canvas id="cvs" style="border: 2px solid black" height="700" width="700"></canvas>
+	<div style="display: flex; flex-direction: column;">
+		<button type="button" id="clear" style="width: 100px">Очистить</button>
+		<p>Чтобы завершить многоугольник, кликните дважды</p>
+	</div>
+
+	<script>
+		var cvs = document.getElementById("cvs"), 
+    ctx = cvs.getContext("2d"),
+		coords = [];
+		var button = document.getElementById('clear');
+		button.addEventListener('click',clear,false);
+		function clear()
+		{
+			ctx.clearRect(0,0,700,700);
+			coords = [];
+		}
+		cvs.addEventListener('click', function(event)
+    {
+        var x, y;
+        var rect = cvs.getBoundingClientRect();
+        x = event.clientX - rect.left;
+        y = event.clientY - rect.top;
+        event.preventDefault();
+        if(event.which == 1)
+        {
+            coords.push([x, y]);
+            if(coords.length == 1) draw__pixel([x, y]);
+            if(coords.length > 1) draw__line(coords[coords.length - 2], coords[coords.length - 1]);
+        }
+    });
+    cvs.addEventListener('dblclick', function(event)
+    {
+        coords.pop();
+        draw__line(coords[coords.length - 1], coords[0]);
+        fill__poly();
+        coords = [];
+    });
+		function draw__pixel(pt)
+		{
+        ctx.fillRect(pt[0], pt[1], 1, 1);
+		}
+		function draw__line(pt1, pt2)
+		{
+        ctx.beginPath()
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "black";
+        ctx.moveTo(pt1[0], pt1[1]);
+        ctx.lineTo(pt2[0], pt2[1]);
+        ctx.stroke();
+		}
+		function fill__poly()
+		{
+        coords = rast__poly();
+        for(let i = 0; i < coords.length - 2; i++)
+        {
+            if(coords[i][1] == coords[i+2][1] && coords[i][1] != coords[i+3][1]){
+                draw__line(coords[i],coords[i+2]);
+                i+=2;
+            }
+            else if(coords[i][1] == coords[i+1][1]){
+                draw__line(coords[i],coords[i+1]);
+                i++;
+            }
+        }
+		}
+		function one__line(pt1, pt2)
+		{
+        // horizontal line
+        if(pt1[1] == pt2[1])
+            return true;
+        return false;
+		}
+		function rast__poly()
+		{
+        var poly = [];
+        for(let i = 0; i < coords.length - 1; i++)
+        {
+            if(!one__line(coords[i],coords[i+1])){
+                  poly = poly.concat(rest__line(coords[i],coords[i+1]));
+            }
+            else poly.push(coords[i]);
+        }
+        if(!one__line(coords[coords.length - 1], coords[0]))
+        {
+            poly = poly.concat(rest__line(coords[coords.length - 1], coords[0]));
+        }
+        return poly.sort(sort__f);
+		}
+		function rest__line(pt1, pt2)
+		{
+        var y = pt1[1],
+        dx = (pt2[0] - pt1[0])/(pt2[1] - pt1[1]),
+        x = pt1[0],
+        poly = [];
+        if(pt1[1] < pt2[1]){
+            while(y <= pt2[1]){
+                poly.push([x,y]);
+                y++;
+                x += dx;
+            }
+        }
+        else{
+            while(y >= pt2[1]){
+                poly.push([x,y]);
+                y--;
+                x -= dx;
+            }
+        }
+        return poly;
+		}
+		function sort__f(pt1,pt2)
+		{
+        if(pt1[1] > pt2[1]) return 1;
+        if(pt1[1] < pt2[1]) return -1;
+        if(pt1[1] == pt2[1])
+        {
+            if(pt1[0] > pt2[0]) return 1;
+            if(pt1[0] < pt2[0]) return -1;
+            if(pt1[0] == pt2[0]) return 0;
+        }
+		}
+	</script>
+</body>
+</html>
